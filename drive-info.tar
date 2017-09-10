@@ -1,0 +1,49 @@
+#!/bin/sh
+#########	Output info. on all fixed and removable partitions.
+
+#####	Terence Becker		SunBurnt		Jan. 3  2014
+
+#####	No warranty of any kind... Use at your own risk!
+
+
+Parts=`cat /proc/partitions |sed '/sd\|mmc/!d;s,^.* ,,'` # mcewanw
+#echo "$Parts" ;exit
+echo
+echo "Part. FS  F/R Flag        Sizes              Drv.Label"
+echo "======================================================="
+
+
+for PART in $Parts
+do
+	TYPE=`blkid "/dev/$PART" |sed 's,^.*: ,,'`
+	eval $TYPE
+
+#	F_R=`cat "/sys/block/${PART:0:3}/removable"` # Terry version
+
+# mcewanw version follows
+if [ ${#PART} -lt 6 ];then
+ F_R=`cat "/sys/block/${PART:0:3}/removable" 2>/dev/null`
+else
+ F_R=`cat "/sys/block/${PART:0:7}/removable" 2>/dev/null`
+fi
+
+	[ "$F_R" = '1' ]&& F_R=rem || F_R=fix
+
+	BOOT=`fdisk -l |sed "/$PART *\*/"'!d'`
+	[ "$BOOT" ]&& BOOT=boot || BOOT='    '
+
+	info=`disktype "/dev/$PART"`
+	HUMAN=`echo "$info" |sed '/, size /!d;s,^.*size ,,;s, (.*$,,;s, ,-,g'`
+	SIZE=`echo "$info" |sed '/, size /!d;s,^.*(,,;s, bytes.*$,,'`
+
+# mcewanw version follows
+	if [ "${#PART}" -eq 3 -o "${#PART}" -eq 7 ]
+	then
+		echo "$PART ,    ,$F_R,    ,$HUMAN,$SIZE,$LABEL"
+	else
+		echo "$PART,$TYPE,$F_R,$BOOT,$HUMAN,$SIZE,$LABEL"
+	fi
+done
+
+echo
+
