@@ -5,4 +5,4 @@ Restructured debdog-installer (originally written by puppy forum member sunburnt
 
 Founding admin/owner of "The DebianDog Organisation" github pages.
 
-Don't misread any of this please (or do if you want...). Most of these scripts were also heavily modified by Fred and Toni (either or both) and maybe mainly written by either or both of them - acknowledging contributions had been a sensitive area in the DebianDog world due to some lack of that. I do know Terry wrote first version of debdog-install though - not that it matters who the originator was, but polite to always give credit I feel and not just adopt another person's suggestions with named comment).
+Don't misread any of this please (or do if you want...). Most of these scripts were also heavily modified by Fred and Toni (either or both) and maybe mainly written by either or both of them - acknowledging contributions had been a sensitive area in the DebianDog world due to some lack of that. I do know Terry wrote first version of debdog-install though - not that it matters who the originator was, but polite to always give credit I feel and not just adopt another person's suggestions without named credit).
